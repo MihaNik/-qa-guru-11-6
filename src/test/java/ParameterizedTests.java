@@ -38,6 +38,10 @@ public class ParameterizedTests {
     @ValueSource(strings = {"java operators", "jackson"})
     @ParameterizedTest(name = "Проверка  отображения статей по теме \"{0}\"")
     public void articleSearchCommonTest(String articleTheme) {
+        if ($(byText("AGREE")).is(visible)) { //cookies privacy popup
+            $(byText("AGREE")).click();
+        }
+
         $("ul#menu-main-menu li").click();
         $("input#search").setValue(articleTheme).pressEnter();
         $$("div#main article").findBy(text(articleTheme)).shouldBe(visible);
